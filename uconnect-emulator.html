@@ -76,8 +76,7 @@
     <p style="color: #888;">loading readme from github...</p>
   </div>
 
-  <script>
-    // gets the live readme for consistancy
+<script>
     fetch('https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/README.md')
       .then(response => {
         if (!response.ok) throw new Error('failed to load readme');
@@ -85,6 +84,20 @@
       })
       .then(markdown => {
         document.getElementById('readme-content').innerHTML = marked.parse(markdown);
+
+        // Fix relative image paths so they point to GitHub raw content
+        const container = document.getElementById('readme-content');
+        const images = container.getElementsByTagName('img');
+        
+        for (let img of images) {
+          let src = img.getAttribute('src');
+          // If the image path is relative (doesn't start with http or //)
+          if (src && !src.startsWith('http') && !src.startsWith('//')) {
+            // Clean up leading dots/slashes if necessary
+            let cleanPath = src.replace(/^\.?\//, '');
+            img.src = `https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/${cleanPath}`;
+          }
+        }
       })
       .catch(error => {
         document.getElementById('readme-content').innerHTML = '<p style="color: #ff5555;">failed to load readme from github.</p>';
