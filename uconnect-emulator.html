@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>uconnect emulator - olithebest12.com</title>
-  <!-- Load Marked.js to render Markdown -->
+  <!-- loaded marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
@@ -40,7 +40,7 @@
       font-size: 0.9rem;
     }
 
-    /* Styles for the pulled README content */
+    /* styles for the pulled readme content */
     #readme-content img {
       max-width: 100%;
     }
@@ -77,7 +77,7 @@
   </div>
 
   <script>
-    // Fetch the raw README from the GitHub repository
+    // gets the live readme for consistancy
     fetch('https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/README.md')
       .then(response => {
         if (!response.ok) throw new Error('failed to load readme');
