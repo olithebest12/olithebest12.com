@@ -80,21 +80,16 @@
 <script>
     fetch('https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/README.md')
       .then(response => {
-        if (!response.ok) throw new Error('failed to load readme');
+        if (!response.ok) throw new Error('failed to load readme, contact oli if this persists !');
         return response.text();
       })
       .then(markdown => {
         document.getElementById('readme-content').innerHTML = marked.parse(markdown);
-
-        // Fix relative image paths so they point to GitHub raw content
-        const container = document.getElementById('readme-content');
+const container = document.getElementById('readme-content');
         const images = container.getElementsByTagName('img');
-        
         for (let img of images) {
           let src = img.getAttribute('src');
-          // If the image path is relative (doesn't start with http or //)
-          if (src && !src.startsWith('http') && !src.startsWith('//')) {
-            // Clean up leading dots/slashes if necessary
+ if (src && !src.startsWith('http') && !src.startsWith('//')) {
             let cleanPath = src.replace(/^\.?\//, '');
             img.src = `https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/${cleanPath}`;
           }
