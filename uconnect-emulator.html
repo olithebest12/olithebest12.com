@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>uconnect emulator - olithebest12.com</title>
+  <!-- Load Marked.js to render Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: monospace;
-      max-width: 650px;
+      max-width: 750px;
       margin: 40px auto;
       padding: 0 20px;
       background: #111;
       color: #eee;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     a {
@@ -31,20 +33,63 @@
       font-weight: normal;
     }
 
-    .back-link {
+    .nav {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 20px;
-      display: inline-block;
+      font-size: 0.9rem;
+    }
+
+    /* Styles for the pulled README content */
+    #readme-content img {
+      max-width: 100%;
+    }
+    #readme-content pre {
+      background: #1a1a1a;
+      padding: 15px;
+      border: 1px solid #333;
+      overflow-x: auto;
+    }
+    #readme-content code {
+      font-family: monospace;
+      background: #1a1a1a;
+      padding: 2px 5px;
+    }
+    #readme-content blockquote {
+      border-left: 3px solid #58a6ff;
+      margin-left: 0;
+      padding-left: 15px;
+      color: #888;
     }
   </style>
 </head>
 <body>
 
-  <a href="/" class="back-link">&larr; back</a>
+  <div class="nav">
+    <a href="/">&larr; home</a>
+    <a href="https://github.com/exycalll/Uconnect-3-8.4-Emulator" target="_blank" rel="noopener">view repo on github &nearr;</a>
+  </div>
 
-  <h1>uconnect emulator</h1>
-  <p>gotta put a desc or sum here</p>
+  <h1>uconnect-emulator</h1>
+  
+  <div id="readme-content">
+    <p style="color: #888;">loading readme from github...</p>
+  </div>
 
-  <!-- Add writeup, instructions, or links to the code here -->
+  <script>
+    // Fetch the raw README from the GitHub repository
+    fetch('https://raw.githubusercontent.com/exycalll/Uconnect-3-8.4-Emulator/main/README.md')
+      .then(response => {
+        if (!response.ok) throw new Error('failed to load readme');
+        return response.text();
+      })
+      .then(markdown => {
+        document.getElementById('readme-content').innerHTML = marked.parse(markdown);
+      })
+      .catch(error => {
+        document.getElementById('readme-content').innerHTML = '<p style="color: #ff5555;">failed to load readme from github.</p>';
+      });
+  </script>
 
 </body>
 </html>
