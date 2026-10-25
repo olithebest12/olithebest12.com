@@ -1,175 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>olithebest12</title>
   <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --text-dim: #94a3b8;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
-      --border: #334155;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding: 2rem 1rem;
+      font-family: monospace;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+      line-height: 1.5;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 3rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.5rem;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    p.subtitle {
-      color: var(--text-dim);
-      font-size: 1.1rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.2rem;
-      color: var(--text);
-      border-left: 4px solid var(--accent);
-      padding-left: 0.75rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+    a {
+      color: #58a6ff;
       text-decoration: none;
-      color: inherit;
-      display: block;
     }
 
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-    }
-
-    .card h3 {
-      font-size: 1.2rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .card p {
-      color: var(--text-dim);
-      font-size: 0.95rem;
-    }
-
-    .links-list {
-      list-style: none;
-    }
-
-    .links-list li {
-      margin-bottom: 0.75rem;
-    }
-
-    .links-list a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .links-list a:hover {
+    a:hover {
       text-decoration: underline;
     }
 
-    footer {
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 0.85rem;
-      margin-top: 4rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      border-bottom: 1px dashed #444;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-top: 30px;
+      color: #888;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      color: #888;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>olithebest12</h1>
-      <p class="subtitle">Hardware tinkerer, hardware/software projects & experiments.</p>
-    </header>
+  <h1>olithebest12</h1>
+  <p>hardware, code, and random projects.</p>
 
-    <!-- Projects Section -->
-    <section>
-      <h2>Projects</h2>
-      <div class="grid">
-        <!-- Project 1 -->
-        <a href="/project-one" class="card">
-          <h3>Project One</h3>
-          <p>Short description of this project or experiment goes here.</p>
-        </a>
+  <h2>projects</h2>
+  <ul>
+    <li>
+      <a href="/project1">project1</a>
+      <span class="desc">- short description here</span>
+    </li>
+    <li>
+      <a href="/project2">project2</a>
+      <span class="desc">- another project</span>
+    </li>
+  </ul>
 
-        <!-- Project 2 -->
-        <a href="/project-two" class="card">
-          <h3>Project Two</h3>
-          <p>Short description of another cool project or hardware hack.</p>
-        </a>
-
-        <!-- Project 3 -->
-        <a href="/project-three" class="card">
-          <h3>Project Three</h3>
-          <p>More details or interactive tools built for the web.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- Other Stuff Section -->
-    <section>
-      <h2>Other Stuff</h2>
-      <ul class="links-list">
-        <li><a href="/about">/about</a> — A little more background about me.</li>
-        <li><a href="/tools">/tools</a> — Quick web utilities or local scripts.</li>
-        <li><a href="https://github.com/olithebest12" target="_blank" rel="noopener">GitHub</a> — Check out my code on GitHub.</li>
-      </ul>
-    </section>
-
-    <footer>
-      <p>&copy; olithebest12. Powered by Cloudflare Pages.</p>
-    </footer>
-  </div>
+  <h2>other stuff</h2>
+  <ul>
+    <li><a href="/about">/about</a></li>
+    <li><a href="https://github.com/olithebest12">github</a></li>
+  </ul>
 
 </body>
 </html>
