@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>what im listening to - olithebest12.com</title>
+  <link rel="icon" href="/favico.png" type="image/png">
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      border-bottom: 1px dashed #444;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-top: 30px;
+      color: #888;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      border: 1px dashed #333;
+      padding: 15px 20px;
+      margin-top: 20px;
+      background: #161616;
+    }
+
+    .status {
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    .line {
+      margin-bottom: 8px;
+    }
+
+    .label {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="/">&larr; home</a>
+  </div>
+
+  <h1>what im listening to</h1>
+
+  <p>live metadata pulled straight off my uconnect 8.4 bench setup over canbus :)</p>
+
+  <div class="card">
+    <div id="status" class="status">connecting to bench...</div>
+
+    <div class="line"><span class="label">genre:</span> <span id="genre">---</span></div>
+    <div class="line"><span class="label">station:</span> <span id="station">---</span></div>
+    <div class="line"><span class="label">artist:</span> <span id="artist">---</span></div>
+    <div class="line"><span class="label">title:</span> <span id="title">---</span></div>
+  </div>
+
+  <script>
+    async function updateTrack() {
+      try {
+        const res = await fetch('/current-track.json?_=' + new Date().getTime());
+        if (!res.ok) throw new Error('offline');
+        
+        const data = await res.json();
+
+        document.getElementById('genre').textContent = data.album || '---';
+        document.getElementById('station').textContent = data.source || '---';
+        document.getElementById('artist').textContent = data.artist || '---';
+        document.getElementById('title').textContent = data.title || '---';
+        document.getElementById('status').textContent = 'status: live';
+      } catch (err) {
+        document.getElementById('status').textContent = 'status: offline';
+      }
+    }
+
+    updateTrack();
+    setInterval(updateTrack, 4000);
+  </script>
+</body>
+</html>
