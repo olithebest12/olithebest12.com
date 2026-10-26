@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>what im listening to - olithebest12.com</title>
+  <link rel="icon" href="/favico.png" type="image/png">
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      border-bottom: 1px dashed #444;
+      padding-bottom: 10px;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      border: 1px dashed #333;
+      padding: 15px 20px;
+      margin-top: 20px;
+      background: #161616;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #2ea043;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .status-offline {
+      background-color: #da3633;
+    }
+
+    .label {
+      color: #888;
+      font-size: 0.85rem;
+    }
+
+    .val {
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .live-tag {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="/">&larr; home</a>
+  </div>
+
+  <h1>what im listening to</h1>
+
+  <p>live metadata pulled straight off my uconnect 8.4 bench setup over canbus!</p>
+
+  <div class="card">
+    <div class="live-tag">
+      <span id="dot" class="status-dot"></span>
+      <span id="status-text">syncing with repo...</span>
+    </div>
+
+    <div class="label">GENRE / ALBUM</div>
+    <div id="album" class="val">---</div>
+
+    <div class="label">SOURCE / STATION</div>
+    <div id="source" class="val">---</div>
+
+    <div class="label">ARTIST</div>
+    <div id="artist" class="val">---</div>
+
+    <div class="label">TITLE</div>
+    <div id="title" class="val">---</div>
+  </div>
+
+  <script>
+    async function updateNowPlaying() {
+      try {
+        // Fetches the live JSON file directly from your GitHub Pages deployment
+        const res = await fetch('/current-track.json?_=' + new Date().getTime());
+        if (!res.ok) throw new Error('offline');
+        
+        const data = await res.json();
+
+        document.getElementById('album').textContent = data.album || '---';
+        document.getElementById('source').textContent = data.source || '---';
+        document.getElementById('artist').textContent = data.artist || '---';
+        document.getElementById('title').textContent = data.title || '---';
+
+        document.getElementById('dot').className = 'status-dot';
+        document.getElementById('status-text').textContent = 'live on bench';
+      } catch (err) {
+        document.getElementById('dot').className = 'status-dot status-offline';
+        document.getElementById('status-text').textContent = 'bench offline';
+      }
+    }
+
+    updateNowPlaying();
+    setInterval(updateNowPlaying, 5000);
+  </script>
+</body>
+</html>
