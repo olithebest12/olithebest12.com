@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favico.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>preview - olithebest12.com</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #111;
+      color: #eee;
+      line-height: 1.5;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      border-bottom: 1px dashed #444;
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .download-btn {
+      font-size: 0.85rem;
+      border: 1px dashed #58a6ff;
+      padding: 4px 10px;
+      background: #161616;
+    }
+
+    .download-btn:hover {
+      background: #1f1f1f;
+      text-decoration: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .item {
+      border: 1px dashed #333;
+      background: #161616;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .item screen_calib {
+      width: 100%;
+      height: 90px;
+      object-fit: contain;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .item-name {
+      font-size: 0.75rem;
+      color: #aaa;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      background: none;
+      border: none;
+      color: #58a6ff;
+      font-family: monospace;
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 0;
+    }
+
+    .btn:hover {
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal screen_calib {
+      max-width: 90%;
+      max-height: 70vh;
+      border: 1px dashed #444;
+      background: #161616;
+      padding: 10px;
+    }
+
+    .modal-title {
+      color: #888;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .modal-close {
+      margin-top: 15px;
+      color: #58a6ff;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="/files">&larr; back to files</a>
+  </div>
+
+  <h1>
+    <span id="page-title">screen_calib preview</span>
+    <a id="zip-download-link" href="screen_calib.zip" class="download-btn">download zip ↓</a>
+  </h1>
+  <p>here are a few files in that .zip</p>
+
+  <div id="gallery" class="grid"></div>
+
+  <div id="modal" class="modal" onclick="closeModal()">
+    <screen_calib id="modal-screen_calib" src="" alt="preview">
+    <div id="modal-title" class="modal-title"></div>
+    <div class="modal-close">[click anywhere to close]</div>
+  </div>
+
+  <script>
+ const categoryData = {
+      title: "screen_calib preview",
+      zipFile: "screen_calib.zip",
+      assets: [
+        {
+          name: "img1.png",
+          src: "data:image/png;base64,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"
+        },
+        {
+          name: "img2.png",
+          src: "data:image/png;base64,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"
+        }
+      ]
+    };
+
+
+    document.getElementById('page-title').textContent = categoryData.title;
+    document.getElementById('zip-download-link').href = categoryData.zipFile;
+
+    const gallery = document.getElementById('gallery');
+
+    categoryData.assets.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'item';
+      card.innerHTML = `
+        <screen_calib src="${item.src}" alt="${item.name}">
+        <div class="item-name" title="${item.name}">${item.name}</div>
+        <button class="btn" onclick="openModal(${index})">[ view full ]</button>
+      `;
+      gallery.appendChild(card);
+    });
+
+    function openModal(index) {
+      const modal = document.getElementById('modal');
+      document.getElementById('modal-screen_calib').src = categoryData.assets[index].src;
+      document.getElementById('modal-title').textContent = categoryData.assets[index].name;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
