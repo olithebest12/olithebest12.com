@@ -77,6 +77,7 @@
       border: 1px solid #222;
       display: block;
       margin-bottom: 8px;
+      cursor: pointer;
     }
 
     .item-name {
@@ -150,15 +151,15 @@
   </div>
 
   <h1>
-    <span id="page-title">banners preview</span>
-    <a id="zip-download-link" href="banners.zip" class="download-btn">download zip ↓</a>
+    <span id="page-title">splash preview</span>
+    <a id="zip-download-link" href="splash.zip" class="download-btn">download zip ↓</a>
   </h1>
   <p>here are a few files in that .zip</p>
 
   <div id="gallery" class="grid"></div>
 
   <div id="modal" class="modal" onclick="closeModal()">
-    <banners id="modal-banners" src="" alt="preview">
+    <img id="modal-img" src="" alt="preview">
     <div id="modal-title" class="modal-title"></div>
     <div class="modal-close">[click anywhere to close]</div>
   </div>
@@ -188,32 +189,39 @@
     };
 
 
-    document.getElementById('page-title').textContent = categoryData.title;
-    document.getElementById('zip-download-link').href = categoryData.zipFile;
+   function renderGallery() {
+      const gallery = document.getElementById('gallery');
+      categoryData.assets.forEach((asset) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <img src="${asset.src}" alt="${asset.name}" onclick="openModal('${asset.src}', '${asset.name}')">
+          <div class="item-name">${asset.name}</div>
+          <button class="btn" onclick="openModal('${asset.src}', '${asset.name}')">view</button>
+        `;
+        gallery.appendChild(item);
+      });
+    }
 
-    const gallery = document.getElementById('gallery');
-
-    categoryData.assets.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.className = 'item';
-      card.innerHTML = `
-        <banners src="${item.src}" alt="${item.name}">
-        <div class="item-name" title="${item.name}">${item.name}</div>
-        <button class="btn" onclick="openModal(${index})">[ view full ]</button>
-      `;
-      gallery.appendChild(card);
-    });
-
-    function openModal(index) {
+    function openModal(src, name) {
       const modal = document.getElementById('modal');
-      document.getElementById('modal-banners').src = categoryData.assets[index].src;
-      document.getElementById('modal-title').textContent = categoryData.assets[index].name;
+      const modalImg = document.getElementById('modal-img');
+      const modalTitle = document.getElementById('modal-title');
+      modalImg.src = src;
+      modalTitle.textContent = name;
       modal.classList.add('active');
     }
 
     function closeModal() {
-      document.getElementById('modal').classList.remove('active');
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
     }
+
+    document.getElementById('page-title').textContent = categoryData.title;
+    document.getElementById('zip-download-link').href = categoryData.zipFile;
+    document.getElementById('zip-download-link').textContent = `download ${categoryData.zipFile} ↓`;
+
+    renderGallery();
   </script>
 </body>
 </html>
