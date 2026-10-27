@@ -189,32 +189,39 @@
     };
 
 
-    document.getElementById('page-title').textContent = categoryData.title;
-    document.getElementById('zip-download-link').href = categoryData.zipFile;
+  function renderGallery() {
+      const gallery = document.getElementById('gallery');
+      categoryData.assets.forEach((asset) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <img src="${asset.src}" alt="${asset.name}" onclick="openModal('${asset.src}', '${asset.name}')">
+          <div class="item-name">${asset.name}</div>
+          <button class="btn" onclick="openModal('${asset.src}', '${asset.name}')">view</button>
+        `;
+        gallery.appendChild(item);
+      });
+    }
 
-    const gallery = document.getElementById('gallery');
-
-    categoryData.assets.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.className = 'item';
-      card.innerHTML = `
-        <splash src="${item.src}" alt="${item.name}">
-        <div class="item-name" title="${item.name}">${item.name}</div>
-        <button class="btn" onclick="openModal(${index})">[ view full ]</button>
-      `;
-      gallery.appendChild(card);
-    });
-
-    function openModal(index) {
+    function openModal(src, name) {
       const modal = document.getElementById('modal');
-      document.getElementById('modal-splash').src = categoryData.assets[index].src;
-      document.getElementById('modal-title').textContent = categoryData.assets[index].name;
+      const modalImg = document.getElementById('modal-img');
+      const modalTitle = document.getElementById('modal-title');
+      modalImg.src = src;
+      modalTitle.textContent = name;
       modal.classList.add('active');
     }
 
     function closeModal() {
-      document.getElementById('modal').classList.remove('active');
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
     }
+
+    document.getElementById('page-title').textContent = categoryData.title;
+    document.getElementById('zip-download-link').href = categoryData.zipFile;
+    document.getElementById('zip-download-link').textContent = `download ${categoryData.zipFile} ↓`;
+
+    renderGallery();
   </script>
 </body>
 </html>
